@@ -40,7 +40,7 @@ class MainWidget(QtWidgets.QMainWindow):
                 QtWidgets.QMessageBox.warning(self, "Invalid Inputs", "გვერდების სიგრძეები არასწორია")
             else:
                 #res = self._calculate_wre()
-                print('wre:',res)
+                print('wre:', res)
                 area = getattr(self, f'lcd_{shape}_area', self.main)
                 perimeter = getattr(self, f'lcd_{shape}_perimeter', self.main)
                 area.display(res['area'])
