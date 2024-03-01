@@ -10,19 +10,18 @@ class MainWidget(QtWidgets.QMainWindow):
 
     def __init__(self):
         super().__init__()
-        loadUi(os.path.join(os.getcwd(),'calculator.ui'), self)
+        loadUi(os.path.join(os.getcwd(), 'calculator.ui'), self)
         self.stackedWidget.setCurrentWidget(self.main)
         self.select.clicked.connect(self.select_shape)
         self.back.clicked.connect(lambda: self.stackedWidget.setCurrentWidget(self.main))
         self.calculate.clicked.connect(self._calculate)
         self.calculators = {
-            "wre" : self._calculate_wre,
+            "wre": self._calculate_wre,
             "samkutxedi": self._calculate_samkutxedi,
             "trapecia": self._calculate_trapecia,
             "kvadrati": self._calculate_kvadrati,
         }
         self.shapes = {"wre", "samkutxedi", "trapecia", "kvadrati"}
-
 
     def select_shape(self):
 
@@ -33,7 +32,7 @@ class MainWidget(QtWidgets.QMainWindow):
 
     def _calculate(self):
 
-        shape = self.stackedWidget.currentWidget().objectName().split("_",2)[0]
+        shape = self.stackedWidget.currentWidget().objectName().split("_", 2)[0]
         print(shape)
         if shape in self.shapes:
             res, err = self.calculators[shape]()
@@ -46,8 +45,6 @@ class MainWidget(QtWidgets.QMainWindow):
                 perimeter = getattr(self, f'lcd_{shape}_perimeter', self.main)
                 area.display(res['area'])
                 perimeter.display(res['len'])
-
-
 
     def _calculate_wre(self):
 
@@ -71,6 +68,7 @@ class MainWidget(QtWidgets.QMainWindow):
         return ({"area": _area, "len": _len}, False)
 
     def _calculate_trapecia(self):
+
         self.gverdebi_t = [self.b1.value(), self.b2.value(), self.b3.value(), self.b4.value()]
         print(self.gverdebi_t)
         for gverdi in self.gverdebi_t:
@@ -80,10 +78,10 @@ class MainWidget(QtWidgets.QMainWindow):
             _area = ((self.gverdebi_t[1] + self.gverdebi_t[0])/2) *\
                 math.sqrt((math.pow(self.gverdebi_t[2], 2) -\
                            math.pow(
-                               ((math.pow((self.gverdebi_t[0]-self.gverdebi_t[1]),2) +\
-                              math.pow(self.gverdebi_t[2],2) - math.pow(self.gverdebi_t[3],2)) /\
-                             (2*(self.gverdebi_t[0] - self.gverdebi_t[1]))\
-                            ),2)))
+                                ((math.pow((self.gverdebi_t[0]-self.gverdebi_t[1]), 2) +\
+                                math.pow(self.gverdebi_t[2],2) - math.pow(self.gverdebi_t[3], 2)) /\
+                                (2*(self.gverdebi_t[0] - self.gverdebi_t[1]))\
+                            ), 2)))
             _len = sum(self.gverdebi_t)
             if _area > 0:
                 return ({"area": _area, "len": _len}, False)
@@ -99,6 +97,7 @@ class MainWidget(QtWidgets.QMainWindow):
         _area = _val ** 2
         _len = _val * 4
         return ({"area": _area, "len": _len}, False)
+
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
